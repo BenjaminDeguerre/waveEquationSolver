@@ -43,3 +43,5 @@ CTestTestfile.cmake
 
 report/**
 build/**
+*.json
+doxyfile
