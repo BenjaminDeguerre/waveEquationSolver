@@ -11,10 +11,8 @@
 #include "function.hpp"
 #include "weSolver.hpp"
 
-using namespace std;
-
-vector<double> functionTest(vector<double> entries) {
-  vector<double> output(1);
+std::vector<double> functionTest(std::vector<double> entries) {
+  std::vector<double> output(1);
   double sign = entries[0] - 1.75 * entries[1];
   output[0] = 0.5 * (((sign > 0) - (sign < 0)) + 1);
   return output;
@@ -22,25 +20,26 @@ vector<double> functionTest(vector<double> entries) {
 
 int main() {
   Gnuplot gp;
-  vector<boost::tuple<double, double> > initialPoints, estimatedValue,
+  std::vector<boost::tuple<double, double> > initialPoints, estimatedValue,
       exactValue;
 
   int grid, functionNumber, scheme;
-  double deltaX, deltaT, t, u, exact, boundMinVal, boundMaxVal;
+  double deltaX, deltaT, t, u, exact, boundMin, boundMax, boundMinVal,
+      boundMaxVal;
 
   WESolver solver;
   Function function;
-  vector<double> initial, sol, boundMin(1), boundMax(1);
+  std::vector<double> initial, sol;
 
   // Initializing boundaries
-  boundMin[0] = -50;
-  boundMax[0] = 50;
+  boundMin = -50;
+  boundMax = 50;
 
-  function = Function(boundMin, boundMax, functionTest);
+  function = Function(functionTest);
 
   // Initializing the different solver parameters.
   grid = 100;
-  deltaX = (boundMax[0] - boundMin[0]) / (grid - 1.0);
+  deltaX = (boundMax - boundMin) / (grid - 1.0);
   deltaT = 0.1;
   u = 1.75;
   t = 10;
@@ -58,15 +57,15 @@ int main() {
   // cin >> t;
 
   // Selection of the solving scheme
-  cout << "Please enter the number of the scheme 1/2/3/4 (upwind "
-          "Explicit/Implicit/Lax-Wendroff/Richtmyer):";
-  cin >> scheme;
+  std::cout << "Please enter the number of the scheme 1/2/3/4 (upwind "
+               "Explicit/Implicit/Lax-Wendroff/Richtmyer):";
+  std::cin >> scheme;
 
   // Setting the solver
   solver = WESolver(deltaX, deltaT, u);
 
   // Vector holding the initial values of the function we wish to estimate
-  initial = vector<double>(grid);
+  initial = std::vector<double>(grid);
 
   // The first and last values are preset and fixed
   initial[0] = boundMinVal;
@@ -78,9 +77,9 @@ int main() {
 
   for (int i = 1; i < grid; i++) {
     exact = (function.getExactSolution(
-        vector<double>{i * deltaX + boundMin[0], t}))[0];
+        std::vector<double>{i * deltaX + boundMin, t}))[0];
     initial[i] = (function.getExactSolution(
-        vector<double>{i * deltaX + boundMin[0], 0}))[0];
+        std::vector<double>{i * deltaX + boundMin, 0}))[0];
 
     initialPoints.push_back(boost::make_tuple(-50 + i * deltaX, initial[i]));
     exactValue.push_back(boost::make_tuple(-50 + i * deltaX, exact));

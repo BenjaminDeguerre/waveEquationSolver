@@ -33,43 +33,16 @@ public:
   /**
     * @brief Constructor for a Function
     *
-    * @param boundMin The std::vector<double> containing the minimum boundaries of the function.
-    * @param boundMax The std::vector<double> containing the maximum boundaries of the function.
     * @param myFunction THe function to be used when calculating a result
     * @see getExactSolution(std::vector<double> entries);
     */
-  Function(std::vector<double> boundMin, std::vector<double> boundMax, functionPointer myFunction);
-
-  /**
-    * Setter for the minimun boudaries of the function
-    * @param boundMin A std::vector<double> containing all the minimum boudaries of the function
-    */
-  void setBoundMin(std::vector<double> boundMin);
-
-  /**
-    * Setter for the minimun boudaries of the function
-    * @param boundMin A std::vector<double> containing all the maximum boudaries of the function
-    */
-  void setBoundMax(std::vector<double> boundMax);
+  Function(functionPointer myFunction);
 
   /**
     * Setter for the minimun boudaries of the function
     * @param function The function which will be used to calculate the values of f.
     */
   void setFunction(functionPointer function);
-
-
-  /**
-    * Getter for the minimun boudaries of the function
-    * @return all the minimun boudaries of the function.
-    */
-  std::vector<double> getBoundMin();
-
-  /**
-    * Getter for the minimun boudaries of the function
-    * @return all the maximum boudaries of the function.
-    */
-  std::vector<double> getBoundMax();
 
   /**
     * Getter for the minimun boudaries of the function
@@ -86,8 +59,6 @@ public:
   std::vector<double> getExactSolution(std::vector<double> entries);
 
 private:
-  std::vector<double> boundMin;
-  std::vector<double> boundMax;
   functionPointer function;
 
 };
