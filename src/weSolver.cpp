@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "function.hpp"
-#include "negativeValueException.hpp"
 
 WESolver::WESolver() {
   this->deltaT = 0.01;
@@ -132,10 +131,6 @@ std::vector<double> WESolver::resolveUpwindExplicit(std::vector<double> initial,
 
 std::vector<double> WESolver::resolveUpwindImplicit(std::vector<double> initial,
                                                     double time) {
-  if (time <= 0) {
-    throw NegativeValueException("Negative time", 3);
-  }
-
   for (int t = 0; t < round(time / this->deltaT); t++) {
     initial = oneStepUpwindImplicit(initial);
   }
@@ -144,9 +139,6 @@ std::vector<double> WESolver::resolveUpwindImplicit(std::vector<double> initial,
 
 std::vector<double> WESolver::resolveLaxWendroff(std::vector<double> initial,
                                                  double time) {
-  if (time <= 0) {
-    throw NegativeValueException("Negative time", 3);
-  }
   for (int t = 0; t < round(time / this->deltaT); t++) {
     initial = oneStepLaxWendroff(initial);
   }
@@ -156,9 +148,6 @@ std::vector<double> WESolver::resolveLaxWendroff(std::vector<double> initial,
 
 std::vector<double> WESolver::resolveRichtmyer(std::vector<double> initial,
                                                double time) {
-  if (time <= 0) {
-    throw NegativeValueException("Negative time", 3);
-  }
   for (int t = 0; t < round(time / this->deltaT); t++) {
     initial = oneStepRichtmyer(initial);
   }

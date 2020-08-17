@@ -2,9 +2,6 @@
 
 #include <vector>
 
-#include "incorrectSizeException.hpp"
-#include "outOfBoundException.hpp"
-
 using namespace std;
 
 Function::Function() {}
