@@ -20,8 +20,7 @@ std::vector<double> functionTest(std::vector<double> entries) {
 
 std::vector<double> functionTest2(std::vector<double> entries) {
   std::vector<double> output(1);
-  double sign = entries[0] - 1.75 * entries[1];
-  output[0] = 0.5 * (((sign > 0) - (sign < 0)) + 1);
+  output[0] = 0.5 * exp(- pow(entries[0] - 1.75 * entries[1], 2));
   return output;
 }
 
@@ -52,6 +51,9 @@ int main() {
   t = 10;
   boundMinVal = 0;
   boundMaxVal = 1;
+
+  // boundMinVal = 0;
+  // boundMaxVal = 0;
 
   // Enter the values manually
   // cout << "Please enter the number of point in the grid : ";
@@ -85,6 +87,7 @@ int main() {
   for (int i = 1; i < grid; i++) {
     exact = (function.getExactSolution(
         std::vector<double>{i * deltaX + boundMin, t}))[0];
+
     initial[i] = (function.getExactSolution(
         std::vector<double>{i * deltaX + boundMin, 0}))[0];
 
