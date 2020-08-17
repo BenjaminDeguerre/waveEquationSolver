@@ -18,6 +18,13 @@ std::vector<double> functionTest(std::vector<double> entries) {
   return output;
 }
 
+std::vector<double> functionTest2(std::vector<double> entries) {
+  std::vector<double> output(1);
+  double sign = entries[0] - 1.75 * entries[1];
+  output[0] = 0.5 * (((sign > 0) - (sign < 0)) + 1);
+  return output;
+}
+
 int main() {
   Gnuplot gp;
   std::vector<boost::tuple<double, double> > initialPoints, estimatedValue,
@@ -38,8 +45,8 @@ int main() {
   function = Function(functionTest);
 
   // Initializing the different solver parameters.
-  grid = 100;
-  deltaX = (boundMax - boundMin) / (grid - 1.0);
+  grid = abs(boundMin) + abs(boundMax);
+  deltaX = grid / (grid - 1.0);  // do not count boundary points
   deltaT = 0.1;
   u = 1.75;
   t = 10;
